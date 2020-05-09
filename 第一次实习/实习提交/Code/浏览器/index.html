@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="css/reset.css" rel= "stylesheet">
+    <link href="css/select.css" rel="stylesheet">
+    <link href="css/input.css" rel="stylesheet">
+    <link href="css/font.css"rel="stylesheet">
+    <style>
+        body{
+            background-color: rgb(0, 165, 124);
+        }
+        html{
+            height:100%;
+            background-color: rgb(0, 165, 124);
+        }
+
+        .head{
+            height :150px;
+            /* text-align: center; */
+            background-color: rgb(255, 212, 212);
+            margin-top:-20px;
+            
+        }
+        .left{
+            
+            float:left;
+            width:60%;
+            height:650px;
+            /* border:1px solid #F00; */
+            /* height:100px; */
+            background-color: rgb(23, 255, 205);
+            margin:0 auto;
+        }
+        .right{
+            float:right;
+            width:40%;
+            height:315px;
+            background-color: rgb(250, 255, 173);
+            /* border:1px solid rgb(0, 0, 0) */
+            overflow:scroll;
+            
+        }
+        .foot{
+            width:100%;
+            display:inline-block;
+        }
+        .rult{
+            width:40%;
+            background-color: rgb(59, 229, 252);
+            margin:0 auto;
+            float:right;
+            margin-top:-350px;
+            overflow-y:scroll; 
+            height:335px;
+        }
+
+        table{width:100%;border:1px solid #999;}table td{word-break: keep-all;white-space:nowrap;}
+        .item {
+				display: none;
+				width: 80%;
+				height: 65%;
+				overflow: hidden;
+                position: relative;
+                background-color: rgb(197, 241, 255);
+                /* 给框添加纵向拖动轴 */
+                overflow: scroll;
+                border-radius: 10px;
+                box-shadow: 1px 1px 5px rgb(108, 109, 109);
+			}			
+			/* .item>img {
+				width: 100%;
+				height: auto;
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				margin: auto;
+			}	 */
+			.item.active {
+				display: block;
+			}
+            .btn{
+             
+                box-shadow:10 10  30px #383838 inset;
+                width: 100px;
+                height:50px;
+                size: 40;
+                border:0;
+                background: #3d83fa;color: #fefefe
+            }
+           
+            .btn:active,#add-button:active,#delete-button:active{
+                background-color: rgb(141, 138, 134);
+            }
+            .btn:focus,#add-button:active,#delete-button:active{
+                background-color: rgb(255, 72, 0);
+            }
+            .position-button{
+                margin:10px auto;
+                width:210px;
+
+            }
+           
+    </style>
+   
+     <script src="bootstrap-3.3.7-dist/js/bootstrap.js" ></script>
+     <link href="bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
+     <script src="./jquery/jquery-3.4.1-min.js"></script>
+    
+    
+</head>
+<body>
+    
+    <div class="head">
+        <h1 class = "text-center" style="line-height:150px;">国航行李托运计算器</h1>
+    </div>
+    
+    <!-- form表单提交 -->
+    <form action="/getPrice1"  id = "form1" method="GET">
+    <div class="left"> 
+        <div class="position-button">
+            <!-- 选择国内航班还是国际航班 -->
+            <button class="btn btn1"style="border-top-left-radius:7px;
+            border-bottom-left-radius:7px;
+            border-top-right-radius:0;border-bottom-right-radius:0;"type = "button" >国内</button><button class="btn btn2" style=" border-top-left-radius:0;
+            border-bottom-left-radius:0;
+            border-top-right-radius:7px;border-bottom-right-radius:7px;"type = "button">国际</button>
+            <input id = "flight-type-input" type = "text" value = "0" style = "display: none;" name= "flight_type" >
+             <!-- <input type = "radio" style = "display: none;" name= "flight_type" value = "1"> -->
+
+        </div>
+        <!-- 这是国内的item -->
+       
+        <div class="item active">
+            <!-- <im    g src="./img/1.jpeg" height="1191" width="820" /> -->
+
+            <!-- 选择乘客类型 -->
+            <div class="div-select1" style="height: 60px;">
+                <select name="passengers_type"class = "select select1" id = "passengers_type" > 
+                    <option value="0" >选择乘客类型</option> 
+                    <option value="1" selected ="selected">成人/儿童</option> 
+                    <option value="2">婴儿</option> 
+                </select> 
+                
+            </div>
+          
+            <!-- 选择 -->
+            <div class="div-select2" style="height: 60px;">
+                <select name="class_type"class = "select select2" id = "class_type" > 
+                    <option value="0" >选择舱位</option> 
+                    <option value="1" selected ="selected">经济舱</option> 
+                    <option value="2">公务舱</option> 
+                    <option value="3">头等舱</option> 
+                </select> 
+            </div>
+            <div class="div-select3" style="height: 60px;" >
+                <select name="has_card"class = "select select3" style = " width:200px;" id="has_card" > 
+                    <option value="0" >是否有VIP卡</option> 
+                    <option value="1"selected ="selected">无</option> 
+                    <option value="2">凤凰知音终身白金卡/白金卡</option> 
+                    <option value="3">凤凰知音金卡/银卡</option> 
+                    <option value="4">星空联盟金卡</option> 
+                </select> 
+            </div>
+           
+              <!-- 选择乘坐次数 -->
+            <div class="radio-num">
+                <!-- 这个div是为了让字垂直居中 -->
+                <div style="line-height: 40px;" class = "num">
+                    <span>选择数量：</span> <span>单程 </span> <input type="radio" name="number" value="go" checked="true" class = "number"/> 
+                    <span>往返</span><input type="radio" name="number" value="goAndBack"class = "number" />
+                    <!-- 如果选了多称，就加一个框出来，让其输入 -->
+                    <span>多程</span> <input type="radio" name="number" value="many" id = "mang-num" class = "number"/>
+                    <input name = "the_fly_count" value = "1" type = "text" id = "mang_number"style = "height:38px;display: none;float:right;margin-right:100px;"/>
+                    <input type = "button" id = "ok" value = "OK"style = "height:35px;display: none;float:right;margin-top:-40px;line-height:35px;background-color:rgb(255, 72, 0);color:white;font-size:18px;text-align:center;">
+                </div>
+                <!-- <input type="button" id="getSexBtn" value="获取性别" /> -->
+            </div>
+            <div class="price-div">
+                <span>请输入单价：</span><input type="text" name ="flight_price" id = "input-price" style="margin-top: 0px;width:100px;height:38px;" placeholder="元" value = "1000"/>
+            </div>
+
+        </div>
+        <!-- 这是国际的item -->
+        <div class="item">
+            <!-- 把这个国际的里面设置为form2，不会干扰国内的 -->
+             <!-- 选择乘客类型 -->
+             <div class="div-select1" style="height: 60px;">
+                <select name="passengers_type"class = "select select1" id = "out_passengers_type" form="form2" > 
+                    <option value="0" >选择乘客类型</option> 
+                    <option value="1" selected ="selected">成人/儿童</option> 
+                    <option value="2">婴儿</option> 
+                </select> 
+    
+            </div>
+          
+            <!-- 舱类型 -->
+            <div class = "div-class">
+                <select name = "class_type" class = "select select2" id = "out_class_type_type" form="form2">
+                    <option value="0">选择舱位</option>
+                    <option value="1" selected = "selected">经济舱</option>
+                    <option value="2">悦享经济舱/超级经济舱</option>
+                    <option value="3">头等舱/公务舱</option>
+                </select>
+            </div>
+            <!-- 选择飞行起始地和出发地区域 -->
+            <div class = "origin-target-area" style="height: 60px;">
+                <select name = "origin_target_area" class="select select1" id = "origin_target_area" form="form2" style="width:200px;">
+                    <option value="0" selected = "selected" >选择起始/目的地区域</option>
+                    <option value="6" >请查看规则获取区域的班次信息</option>
+                    <option value="1" >区域一</option>
+                    <option value="2" >区域二</option>
+                    <option value="3" >区域三</option>
+                    <option value="4" >区域四</option>
+                    <option value="5" >区域五</option>
+
+                </select>
+            </div>
+           
+                <!-- 选择乘坐次数 -->
+                <div class="radio-num">
+                    <!-- 这个div是为了让字垂直居中 -->
+                    <div style="line-height: 40px;" class = "num">
+                        <span>选择数量：</span> <span>单程 </span> <input type="radio" name="out_number" value="go" checked="true" class = "number" form="form2"/> 
+                        <span>往返</span><input type="radio" name="out-number" value="goAndBack"class = "number" form="form2"/>
+                        <!-- 如果选了多称，就加一个框出来，让其输入 -->
+                        <span>多程</span> <input type="radio" name="out-number" value="many" id = "mang-num" class = "number" form="form2"/>
+                        <input name = "the_fly_count" value = "1" type = "text" id = "mang_number" form="form2"style = "height:38px;display: none;float:right;margin-right:100px;"/>
+                        <input type = "button" id = "ok" value = "OK" form="form2"style = "height:35px;display: none;float:right;margin-top:-40px;line-height:35px;background-color:rgb(255, 72, 0);color:white;font-size:18px;text-align:center;">
+                    </div>
+                    <!-- <input type="button" id="getSexBtn" value="获取性别" /> -->
+                </div>
+
+                <div class="price-div" >
+                    <span>请输入单价：</span><input type="text" name ="out_flight_price" form = "form2"id = "out_input-price" style="margin-top: 0px;width:100px;height:38px;" placeholder="美元" value = "1000"/>
+                </div>
+    
+
+
+        </div>
+
+        <div class = "submit-div">
+            <!-- 提交计算按钮 -->
+            <input type="button" value="计算" id = "submit-button" onclick="change()">
+            <input type="submit"  id = "form1-button" style = "display: none;"/>
+        </div>
+        
+
+    </div>
+
+    <div class="right">
+        <div class = "luggage-xyz-weight-input" >
+            <p>请输入托运行李的信息：</p>
+            <!-- 添加删除按钮 -->
+            <div class = "add-delete-div"><input type="button" id = "add-button" value="添加"><input type="button" id = "delete-button"value="删除"></div>
+            <input id = "luggage-count"type = "text" style="display: none;" name = "luggage_count" value = "1">
+            <div class="input-xyzweight">
+                <div class="every"> <span>第1件 </span><span>长：</span><input type="text" placeholder="cm"  name="x"  value = 0 class= "x" form="form1"> <span>宽：</span><input type="text"placeholder="cm"  name="y" value = 0 class= "y"><span>高：</span><input type="text"placeholder="cm"  name="z" value = 0 class = "z"><span>重量：</span><input type="text"placeholder="kg" name="weight" value = 0 class = "w"> <input type ="button" id = "do"value = "ok" style="border :1px solid black;"> </div>
+            </div>
+            
+        </div>
+      <!--  -->
+    </div>
+
+    <!-- form表单 -->
+</form>
+
+<div class="nooo2">
+    <form action="getPrice2" id = "form2" method="GET">
+        <!-- form2的提交按钮 -->
+            <input type="text" value = "1" id = "out_flight_type" name = "flight_type" style="display:  none;" form="form2"/>
+            <input type="submit" value="计算" id = "form2-button" style = "display: none;"/>
+            <input type="text" value = "1" id = "out_luggage_count" name = "luggage_count" style="display:  none;" form="form2"/>
+            <div class="every" style="display: none;"> <span>第1件 </span><span>长：</span><input type="text" placeholder="cm"  name="x"  value = 0 class= "xx"> <span>宽：</span><input type="text"placeholder="cm"  name="y" value = 0 class= "yy"><span>高：</span><input type="text"placeholder="cm"  name="z" value = 0 class = "zz"><span>重量：</span><input type="text"placeholder="kg" name="weight" value = 0 class = "ww"></div>
+          
+
+        
+    </form>
+</div>
+
+  <div class="foot">
+    <div class="rult">
+        
+        <p class="lead" style="text-align: center">托运规则</p>
+        <ol>
+            <li>1.我们将限定带入客舱行李的最大体积和/或重量。每位头等舱、公务舱旅客可携带两件 随身物品，且每件重量不得超过 8 千克(17 磅);每位经济舱旅客可携带一件随身物品， 且重量不得超过 5 千克(11 磅)。每件随身携带物品长、宽、高三边分别不得超过 55 厘米 (22 英寸)、40 厘米(16 英寸)、20 厘米(8 英寸)，保证可以放置在航空器客舱上方的 封闭式行李架内，或放置在您的前排座椅下。如不能以上述方式放置，或由于超重超大的原 因，或出于安全方面的考虑，则应当作为托运行李运输。</li>
+            <li>2.在行李托运处使用的货币将用于计算整个行程的费用。 (1)人民币适用于在中国境内始发航站的行李托运; (2)欧元适用于在欧元区始发航站的行李托运;
+                (3)加元适用于在加拿大始发航站的行李托运; (4)美元适用于所有非上述国家的行李托运，境外非美元销售单位在收取超限额行李费时，应按照当 日汇率将美元转换成当地货币收取。</li>
+            <li>3.区域一:美洲(除美国/加拿大外)/加勒比海地区与欧洲/非洲/中东/亚洲/西南太平洋之间的航 线;</li>
+            <li>4.区域二:欧洲/中东与非洲/亚洲/西南太平洋之间航线;日本与西南太平洋之间航线; 日本/西南太平洋与亚洲(不含日本及西南太平洋)/非洲之间航线;</li>
+            <li>5.区域三:加拿大与美洲(除美国/加拿大外)/加勒比海地区/欧洲/非洲/中东/亚洲/西南太平洋之间 航线;</li>
+            <li>6.区域四:美国(含夏威夷)与美洲(除美国外)/加勒比海地区/欧洲/非洲/中东/亚洲/西南太平洋
+                之间航线;</li>
+            <li>7.区域五:非洲与亚洲(除日本外)之间航线;欧洲与中东之间航线;亚洲(除日本)内航线;
+                美洲(除美国/加拿大)及加勒比海地区内航线;上述未列明的航线;</li>
+            <li>8.国内航班行李长度限制，每件行李长、宽、高分别不得超过 100 厘米(40 英寸)、60 厘米(24 英寸)、40 厘米 (16 英寸)，超过即需按重量付费</li>
+            <li>9.国内航班行李免费重量限定：
+                (1)持成人或儿童客票的旅客普通行李免费托运限额为头等舱 40 千克(88 磅)，公 务舱 30 千克(66 磅)，经济舱 20 千克(44 磅)。
+                (2)持婴儿客票的旅客普通行李免费托运限额为 10 千克(22 磅)。另可免费托运一 辆折叠式婴儿车或摇篮。
+                (3)凤凰知音终身白金卡、白金卡旅客在原普通行李免费托运限额标准基础上，可额 外免费托运一件普通行李，重量不得超过 30 千克(66 磅)。
+                (4)凤凰知音金卡、银卡旅客在原普通行李免费托运限额标准基础上，可额外免费托 运一件普通行李，重量不得超过 20 千克(44 磅)。
+                (5)星空联盟金卡旅客在原普通行李免费托运限额标准基础上，可额外免费托运一件 普通行李，重量不得超过 20 千克(44 磅)。
+                超过上述规定的件数、重量或尺寸的行李应支付超限额行李费。</li>
+            <li>10.国际航班长度限制，每件普通行李的三边之和须小于或等于 158 厘米(62 英寸包括滑轮和把手)，超过即需付费</li>
+            
+            <li>11.国际航班行李免费重量限制：
+                1 头等、公务舱旅客 持成人或儿童客票的头等舱、公务舱旅客可免费托运两件普通行李。每件普通行李的重
+                量须小于或等于 32 千克(70 磅)。
+                2 悦享经济舱、超级经济舱 悦享经济舱、超级经济舱客票旅客免费托运两件普通行李 (每件普通行李的重量须小于
+                或等于 23 千克/50 磅)。 3 经济舱旅客
+                A. 经济舱客票旅客免费托运一件普通行李 (每件普通行李的重量须小于或等于 23 千 克/50 磅)的区域如下:
+                夏威夷与美洲、加勒比地区、欧洲、非洲、中东、亚洲、西南太平洋之间的航线。 欧洲、非洲与亚洲 (除日本、巴基斯坦、新加坡、哈萨克斯坦外)之间的航线。 亚洲内 (除日本、巴基斯坦、新加坡、哈萨克斯坦外)之间的航线。其他未列明的航线。 (注:亚洲含中国大陆及港澳台地区，不含中东、西南太平洋。)
+                B. 经济舱客票旅客免费托运两件普通行李 (每件普通行李的重量须小于或等于 23 千 克/50 磅)的区域如下:
+                美洲、加勒比地区(除夏威夷)与欧洲、非洲、中东、亚洲、西南太平洋之间的航线。 中东与欧洲、非洲、亚洲、西南太平洋之间航线。 日本、巴基斯坦、新加坡、哈萨克斯坦、西南太平洋与 欧洲、非洲、亚洲 (除日本、
+                巴基斯坦、新加坡、哈萨克斯坦外)之间的航线。.</li>
+            <li>1.</li>
+            <li>1.</li>
+            <li>1.</li>
+        </ol>
+    </div>
+  </div>
+
+  <script src="./js/button-click.js"></script>
+  <script>
+
+        //   定义航班类型，分国内航班和国际航班
+        var FLIGHTS_TYPE ={
+            "DEMOSTIC_FLIGHTS":0,
+            "INTERNATIONAL_FLIGHTS":1
+        }
+        //   定义当前的航班类型，用于传到后端，进行计算
+        
+        // 国内航空如果点击，就把NOW_FLIGHTS设置为0，
+        $(".btn1").click(()=>{
+        //  设置为国内航班
+            document.getElementById("flight-type-input").value = FLIGHTS_TYPE.DEMOSTIC_FLIGHTS;
+           
+            // alert("现在的值为："+FLIGHTS_TYPE.DEMOSTIC_FLIGHTS)
+        });
+        // 国际航空如果点击，就把NOW_FLIGHTS设置为1
+        $(".btn2").click(()=>{
+        //  设置为国际航班
+            document.getElementById("flight-type-input").value = FLIGHTS_TYPE.INTERNATIONAL_FLIGHTS;
+            // alert("现在的值为："+FLIGHTS_TYPE.INTERNATIONAL_FLIGHTS)
+        });
+
+        
+        $("#do").click(()=>{
+     
+            _form = document.getElementById("form1");
+            _form2 = document.getElementById("form2");
+            var inputs = _form.getElementsByTagName("input");
+            var inputs2 = _form2.getElementsByTagName("input");
+            alert(inputs2.length)
+            // alert(inputs);
+            //循环这答个input数组取值
+           alert( inputs[17].value)
+            for(var i=17;i<inputs.length;i++)
+            inputs2[(i-15)].value = inputs[i].value
+        });
+
+        // 用来标识行李件数
+        var luggage_number  = 1;
+        // 添加一行信息
+        $("#add-button").click(()=>{
+            luggage_number +=1;
+            document.getElementById("luggage-count").value = luggage_number;
+            document.getElementById("out_luggage_count").value = luggage_number;
+            
+            // 在父元素后面添加一行
+            $('<div class="every"> <span>第'+luggage_number+'件 </span><span>长：</span><input type="text" placeholder="cm"name="x" value = 0 class= "x"> <span>宽：</span><input type="text"placeholder="cm"name="y" value = 0 class= "y"><span>高：</span><input type="text"placeholder="cm" name="z"value = 0 class= "z"><span>重量：</span><input type="text"placeholder="kg"name="weight" value = 0 class= "w"><input type ="button" id = "do"value = "ok" style="border :1px solid black;"></div>').appendTo($(".input-xyzweight"));
+            $('<div class="every" style="display: none;"> <span>第1件 </span><span>长：</span><input type="text" placeholder="cm"  name="x"  value = 0 class= "xx"> <span>宽：</span><input type="text"placeholder="cm"  name="y" value = 0 class= "yy"><span>高：</span><input type="text"placeholder="cm"  name="z" value = 0 class = "zz"><span>重量：</span><input type="text"placeholder="kg" name="weight" value = 0 class = "ww"></div>').appendTo($(".nooo2"));
+        })
+            
+        // 删除一行行李信息
+        $("#delete-button").click(()=>{
+            var s = $(".input-xyzweight");
+            luggage_number -=1;
+            document.getElementById("luggage-count").value = luggage_number;
+            document.getElementById("out_luggage_count").value = luggage_number; 
+            s.children(":last-child").remove();
+            if (luggage_number <=0){
+                alert("最少为0个")
+                luggage_number = 0
+            }
+        })
+
+        // 点击函数
+        $("#submit-button").click(()=>{
+            // 如果点击的是国内航班
+            if(document.getElementById("flight-type-input").value == FLIGHTS_TYPE.DEMOSTIC_FLIGHTS){
+                document.getElementById("form1-button").click()
+            }else{
+                document.getElementById("form2-button").click()
+            }
+        })
+        $("#form1-button").click(()=>{
+            alert($('#form1').serialize())
+            $.ajax({
+            //几个参数需要注意一下
+                type: "GET",//方法类型
+                dataType: "json",//预期服务器返回的数据类型
+                url: "/getPrice1" ,//url
+                data: $('#form1').serialize(),
+                success: function (result) {
+                    console.log(result);//打印服务端返回的数据(调试用)
+                    if (result.resultCode == 200) {
+                        alert("SUCCESS");
+                    };
+                },
+                error : function() {
+                    alert("异常！");
+                }
+            });
+        });
+        $("#form2-button").click(()=>{
+            // 这里做一个字符串拼接，把class为x，y，z，w的name和value拼接起来，用于模拟序列化，
+
+            // var ftname = document.getElementById("flight-type-input").name
+            // var ft = document.getElementById("flight-type-input").value
+          
+            
+            // http://127.0.0.1:5500/getPrice2?passengers_type=1&class_type=0&origin_target_area=0&out_number=go&the_fly_count=1&out_flight_price=1000&x=0&y=0&z=0&weight=0
+            // document.getElementsByClassName("xx").value = document.getElementsByClassName("x").value
+            // var re="";//x的值
+            // $("input.x").each(function(){
+            //     re +="&"+$(this).attr("name")+"="+$(this).val()
+            //     $("input").find(".x").val()
+            //    x =  document.getElementsByClassName("xx").value = $(this).attr("value")
+            //     A = $("#form1")
+            //     var props = "" ;
+            //     // 开始遍历
+            //     for ( var p in A){
+            //     // 方法
+            //     if ( typeof ( A[ p ]) == " function " ){
+            //          A[ p ]() ;
+            //     } else {
+            //         // p 为属性名称，obj[p]为对应属性的值
+            //         props += p + " = " + A [ p ] + " \t " ;
+            //         }
+            //     }
+            //     console.log(props)
+
+            // });
+            // // var rey="";//y的值
+            // $(".y").each(function(){
+            //     re +="&"+$(this).attr("name")+"="+$(this).val()
+            //     document.getElementsByClassName("yy").value = $(this).attr("value")
+            // });
+            // // var rez="";//z的值
+            // $(".z").each(function(){
+            //     re +="&"+$(this).attr("name")+"="+$(this).val()
+            //     document.getElementsByClassName("zz").value = $(this).attr("value")
+            // });
+            // // var rew="";//w的值
+            // $(".w").each(function(){
+            //     re +="&"+$(this).attr("name")+"="+$(this).val()
+            //     document.getElementsByClassName("ww").value = $(this).attr("value")
+            // });
+            
+            // $("#do").click()
+            var international_data =$('#form2').serialize()
+            // $.param(re) + '&' + $('#form2').serialize()
+            alert(international_data)
+            // let formData = $("#form2").serialize()
+            $.ajax({
+            //几个参数需要注意一下
+                type: "GET",//方法类型
+                dataType: "json",//预期服务器返回的数据类型
+                url: "/getPrice2" ,//url
+                data: international_data,
+                success: function (result) {
+                    console.log(result);//打印服务端返回的数据(调试用)
+                    if (result.resultCode == 200) {
+                        alert("SUCCESS");
+                    };
+                },
+                error : function() {
+                    alert("异常！");
+                }
+            });
+        });
+
+       
+
+        // 如果选择多程的话，就显示这两个
+        $("#mang-num").click(()=>{
+            document.getElementById("mang_number").style.display = "block";
+            document.getElementById("ok").style.display = "block";
+            // $("#the_num").style.display = 'block';
+            // alert("1234")
+        })
+
+        // 用jquery获取输入框上的值！！！
+        $("#ok").click(()=>{
+            // 这里要注意，jquery用的是val（），而dom用的是value
+            var num = $("#mang_number").val()
+            // document.getElementById("#man_number").value;
+            var price = $("#input-price").val()
+            price = price * num
+            alert(price)
+            document.getElementById("input-price").value = price;
+        })
+       
+        //封装函数、图片显示的部分、传入获取到的div，和被点击的序号
+        function toggle(eles, active) {
+            for(var i = eles.length; i--;) {
+                eles[i].className = "item"; //先让所有div隐藏
+                }
+                eles[active].className = "item active";//再让被点击的序号对应的div 显示
+                console.log(active)
+            }
+            var aBtn = document.getElementsByClassName("btn");
+            var aIem = document.getElementsByClassName("item");
+            var nowPage = 0; //定义当前页，默认值为0；
+            for(var i = aBtn.length; i--;) {
+                aBtn[i].tab = i;
+                aBtn[i].onclick=function(){
+                    toggle(aIem,this.tab);
+                    nowPage=this.tab; //被点击后，保存当前页的序号
+                }
+        }
+    
+
+
+  </script>
+
+
+</body>
+</html>

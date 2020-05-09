@@ -1,0 +1,101 @@
+/* 行李参数输入栏 */
+.luggage-xyz-weight-input{
+    width: 90%;
+    height :100px;
+    /* background-color: aqua; */
+    margin-top: 20px;
+
+}
+
+/* 输入框美化 */
+input{
+    outline-style: none ;
+    border: 0px;
+    border-radius: 3px;
+    padding: 6px 0px;
+    width: 44px;
+    background-color: #fff;
+    
+    
+}
+/*添加删除的按钮栏 */
+.add-delete-div{
+   height: 20px;
+    width: 100%;
+    /* background-color: #e65d5d; */
+   
+}
+/* 添加按钮 */
+#add-button{
+    background-color: rgb(58, 248, 248);
+    float:right;
+    margin-top: -34px;
+    margin-right: 80px;
+    box-shadow: 1px 1px 5px #444343;
+}
+/* 删除按钮 */
+#delete-button{
+    float:right;
+    margin-top: -34px;
+    background-color: rgb(182, 248, 58);
+    box-shadow: 1px 1px 5px #444343;
+}
+/* 价格输入div */
+.price-div{
+    width: 90%;
+    margin-top: 40px;
+    height:40px;
+
+    background-color: #fff;
+    border-radius: 5px;
+    border: 1px solid rgb(177, 175, 175)
+
+}
+
+/* 复选框div */
+.radio-num{
+    background-color: #fff;
+    margin-top: 67px;
+    height:40px;
+    width: 90%;
+    border-radius: 5px;
+    border: 1px solid rgb(177, 175, 175)
+    
+}
+
+/* 给行李的参数之间加点距离 */
+.every{
+    margin-bottom: 8px;
+    padding: 5px 0px;
+    background-color: rgb(250, 248, 157);
+    border-radius: 5px;
+    box-shadow: 1px 1px 5px rgb(135, 136, 135);
+    
+}
+/* 计算按钮的div */
+.submit-div{
+    
+    width: 80%;
+    margin-top: 25px;
+
+}
+/* 计算按钮 */
+#submit-button{
+    float: right;
+    width: 100px;
+    height:50px;
+
+    background-color: rgb(7, 83, 182);
+    color:white;
+    font-size: 20px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 5px rgb(40, 41, 40);
+}
+
+#submit-button:active{
+    background-color: rgb(32, 1, 1);
+}
+
+#submit-button:hover{
+    background-color: rgb(1, 5, 10);
+}
